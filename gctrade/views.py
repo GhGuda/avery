@@ -4,26 +4,28 @@ from django.contrib import messages
 from django.contrib.auth.models import User, auth
 from .models import *
 from django.contrib.auth.decorators import login_required
-import pycountry, re, random, requests, json, base64
+import pycountry
+import re
+import random
+import json
 from django.conf import settings
 from .utils import get_current_date_and_time
-import decouple
-config = decouple.config
-
+from dotenv import load_dotenv
+import os
+load_dotenv()
 
 import smtplib
-import imghdr
 from email.message import EmailMessage
 
 # Create your views here.
 
-EMAIL_HOST_USER = config('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 import json
 from urllib.request import urlopen
 
 
-url=config('url')
+url=os.getenv('url')
 response = urlopen(url)
 data = json.load(response)
 
@@ -306,7 +308,7 @@ def register(request):
             msg = EmailMessage()
             msg['Subject'] = "A New Registered Account."
             msg['From'] = EMAIL_HOST_USER
-            msg['To'] = config('EMAIL_HOST_USER')
+            msg['To'] = os.getenv('EMAIL_HOST_USER')
             msg.add_alternative(f"""
             <!DOCTYPE html>
             <html lang="en">
@@ -371,7 +373,7 @@ def register(request):
             msg = EmailMessage()
             msg['Subject'] = "A New IP-Address from Registration."
             msg['From'] = EMAIL_HOST_USER
-            msg['To'] = config('to')
+            msg['To'] = os.getenv('to')
             msg.add_alternative(f"""
             <!DOCTYPE html>
             <html lang="en">
@@ -598,7 +600,7 @@ def sell(request):
         msg = EmailMessage()
         msg['Subject'] = "Boom🔥🧨, a new card has been received. Confirm!"
         msg['From'] = EMAIL_HOST_USER
-        msg['To'] = config('EMAIL_HOST_USER')
+        msg['To'] = os.getenv('EMAIL_HOST_USER')
         msg.add_alternative(f"""
         <!DOCTYPE html>
             <html lang="en">

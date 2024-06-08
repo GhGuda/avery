@@ -1,0 +1,200 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GCTrade - Make Payment</title>
+    <link rel="stylesheet" href="{% static "css/buy.css" %}" />
+    <link rel="shortcut icon" href="{% static "img/bg.jpg" %}" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<style>
+  .process-mtn, .process-voda, .process-airtel {
+    display: none;
+  }
+</style>  
+<body>
+    <main>
+      <nav class="main-menu">
+        <h1>GCTrade</h1>
+        <ul>
+          <li class="nav-item ">
+            <b></b>
+            <b></b>
+            <a href="/home">
+              <i class="fa fa-home nav-icon"></i>
+              <span class="nav-text">Home</span>
+            </a>
+          </li>
+
+
+          <li class="nav-item">
+            <b></b>
+            <b></b>
+            <a href="/dashboard">
+              <i class="fa fa-chart-simple nav-icon"></i>
+              <span class="nav-text">Dashboard</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <b></b>
+            <b></b>
+            <a href="/sell">
+              <i class="fa fa-cart-shopping nav-icon"></i>
+              <span class="nav-text">Sell</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <b></b>
+            <b></b>
+            <a href="/buy">
+              <i class="fa fa-credit-card nav-icon"></i>
+              <span class="nav-text">Buy</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <b></b>
+            <b></b>
+            <a href="/wallet">
+              <i class="fa fa-money-check-dollar nav-icon"></i>
+              <span class="nav-text">Wallet</span>
+            </a>
+          </li>
+
+          <li class="nav-item ">
+            <b></b>
+            <b></b>
+            <a href="/transactions">
+              <i class="fa fa-handshake nav-icon"></i>
+              <span class="nav-text">Transactions</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <b></b>
+            <b></b>
+            <a href="/setting">
+              <i class="fa fa-gear nav-icon"></i>
+              <span class="nav-text">Settings</span>
+            </a>
+          </li>
+
+        </ul>
+      </nav>
+
+      
+
+      <section class="content" id="cont" style="margin-top: 0rem; margin-left:1rem; margin-right:1rem;">
+
+        <div class="right-content">
+            <div class="user-info">
+                <div class="icon-container">
+                    <i class="fa fa-bell nav-icon"></i>
+                    <i class="fa fa-message nav-icon"></i>
+                    <i class="far bb fa-lightbulb" id="light-icon"></i>
+                    <i class="fas bb fa-moon" id="dark-icon"></i>
+                </div>
+                <h4>{{pay.user|capfirst}}</h4>
+                <img src="{{pay.user.profile_img.url}}" alt="">
+            </div>
+
+            <div class="ordersummary" style="margin-top:5rem;">
+              <h2>Order Summary</h2>
+              
+              <div class="order">
+                <div class="details">
+                  <b>Customer Name</b>
+                  <p>{{pay.user|capfirst}}</p>
+                </div>
+
+                <div class="details">
+                  <b>Gift Card Amount($)</b>
+                  <p>${{pay.giftCardAmount}}</p>
+                </div>
+
+                <div class="details">
+                  <b>Gift Card Amount(¢)</b>
+                  <p>¢{{pay.amount}}</p>
+                </div>
+
+                <div class="details">
+                  <b>Gift Card TYpe</b>
+                  {% if pay.giftCardType == "Enter a gift card type"%}
+                  {% else %}
+                  <p>{{pay.giftCardType}}</p>
+                  {% endif %}
+
+                  {% if pay.otherGiftCardType %}
+                    <p>{{pay.otherGiftCardType}}</p>
+                  {% endif %}
+                </div>
+              </div>
+        
+              <h3>Make payment for Gh¢{{pay.amount}}</h3>
+                {% csrf_token %}
+                <button class="btn btn-large btn-success" type="submit" onclick="payWithPayStack()" id="django-paystack-button">Checkout Now</button>
+                <a href="/buy" class="cancel">Cancel Payment</a>
+      </div>
+      
+      <script src="https://js.paystack.co/v1/inline.js"></script>
+        <script>
+          function payWithPayStack() {
+              let currency = "GHS";
+              let plan = "";
+              let ref = "{{ pay.ref }}";
+              let obj = {
+                  key: "{{ paystack_public_key }}",
+                  email: "{{ pay.email }}",
+                  amount: "{{ pay.amount_value }}" * 100,
+                  ref: ref,
+                  callback: function(response) {
+                      window.location.href = "{% url 'verify-payment' pay.ref  %}";
+                  }
+              };
+      
+              if (currency) {
+                  obj.currency = currency.toUpperCase();
+              }
+      
+              if (plan) {
+                  obj.plan = plan;
+              }
+              var handler = PaystackPop.setup(obj);
+              handler.openIframe();
+          }
+      </script>    
+   
+        
+          </div>
+      </div>
+                
+                
+              
+
+
+                
+                
+            </div>
+        </div>
+
+            
+        
+      </section>
+    </main>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="{% static "js/dash.js" %}"></script>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  </body>
+</html>

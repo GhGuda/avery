@@ -1,0 +1,236 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static "css/dashm.css" %}">
+    <link rel="shortcut icon" href="{% static "img/bg.jpg" %}" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <main>
+      <nav class="main-menu">
+        <h1>GCTrade</h1>
+        <ul>
+          <li class="nav-item ">
+            <b></b>
+            <b></b>
+            <a href="/home">
+              <i class="fa fa-home nav-icon"></i>
+              <span class="nav-text">Home</span>
+            </a>
+          </li>
+
+
+          <li class="nav-item active">
+            <b></b>
+            <b></b>
+            <a href="/dashboard">
+              <i class="fa fa-chart-simple nav-icon"></i>
+              <span class="nav-text">Dashboard</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <b></b>
+            <b></b>
+            <a href="/sell">
+              <i class="fa fa-cart-shopping nav-icon"></i>
+              <span class="nav-text">Sell</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <b></b>
+            <b></b>
+            <a href="/buy">
+              <i class="fa fa-credit-card nav-icon"></i>
+              <span class="nav-text">Buy</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <b></b>
+            <b></b>
+            <a href="wallet">
+              <i class="fa fa-money-check-dollar nav-icon"></i>
+              <span class="nav-text">Wallet</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <b></b>
+            <b></b>
+            <a href="/transactions">
+              <i class="fa fa-handshake nav-icon"></i>
+              <span class="nav-text">Transactions</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <b></b>
+            <b></b>
+            <a href="/setting">
+              <i class="fa fa-gear nav-icon"></i>
+              <span class="nav-text">Settings</span>
+            </a>
+          </li>
+
+        </ul>
+      </nav>
+
+      
+
+      <section class="content">
+
+        <div class="right-content">
+            <div class="user-info">
+                <div class="icon-container">
+                    <i class="fa fa-bell nav-icon"></i>
+                    <i class="fa fa-message nav-icon"></i>
+                    <i class="far bb fa-lightbulb" id="light-icon"></i>
+                    <i class="fas bb fa-moon" id="dark-icon"></i>
+                </div>
+                <h4>{{profile.user|capfirst}}</h4>
+                <img src="{{profile.profile_img.url}}" alt="">
+            </div>
+            
+            <div class="active-calories">
+              <p class="head">Account Balance</p>
+
+              <div class="active-calories-container">
+              <div class="box" style="--1: 50%">
+                      <div class="circle">
+                          <h2>60<small>$</small></h2>
+                      </div>
+              </div>
+              <div class="calories-content">
+                  <p><span>Today:</span> 0$</p>
+                  <p><span>This Week:</span> 0$</p>
+                  <p><span>This Month:</span> 0$</p>
+                  <p><span>Free Bonus:</span> 60$</p>
+              </div>
+          </div>
+          <div class="act">
+              <a href="https://paystack.com/pay/q85rr88-a-" class="first">Top-Up 💰</a>
+              <a href="/sell" class="third">Sell Card💰</a>
+              <a class="sec">Withdraw 💸</a>
+          </div>
+          <p class="here">Deposite or sell a card to redeem your 60$ free bonus.</p>
+          </div>
+
+            <div class="mobile-personal-beats">
+                <h1>Shortcuts</h1>
+                <div class="personal-beats-container">
+                    <a href="/buy" class="best-item box-one">
+                        <p>Buy GiftCard</p>
+                        <img src="{% static 'img/buy.webp' %}" alt="">
+                    </a>
+                    <a href="/sell" class="best-item box-two">
+                        <p>Sell GiftCard</p>
+                        <img src="{% static 'img/sell-card.webp' %}" alt="">
+                    </a>
+                    <a class="best-item box-three">
+                        <p>Trade Crypto (coming soon)</p>
+                        <img src="{% static 'img/giftmore.jpeg' %}" alt="">
+                    </a>
+                </div>
+            </div>
+
+            <div class="mobile-personal-beats">
+              <h1 class="head">Trade Transactions</h1>
+              <div class="transactions">
+                  <table>
+                    {% if sell %}
+                      {% for sold in sell%}
+                      {% if sold.trans_type == 'Sold' %}
+                  <thead>
+                      <tr>
+                          <th>Gift Card Image</th>
+                          <th>Recent Transactions</th>
+                          <th>Transaction Type</th>
+                          <th>Date</th>
+                          <th>Amount</th>
+                          <th>Payment Method</th>
+                          <th>Status</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                    
+                        <tr>
+                          <td data-label="Gift Card Image">
+                            <img src="{{ sold.images.first.image.url }}" style="width:6rem; height:4rem; border-radius: 1rem;">
+                          </td>
+                          <td data-label="Recent Transactions">{{sold.gift_card_name}} </td>
+                          <td data-label="Transaction Type">{{sold.trans_type}}</td>
+                          <td data-label="Date">{{sold.date}}</td>
+                          <td data-label="Payment Method">{{sold.payment_method|capfirst}}</td>
+                          <td data-label="Amount">${{sold.amount}}</td>
+                          {% if sold.status == 'Processing' %}
+                          <td data-label="Status" style="color:gold;">{{sold.status}}</td>
+
+                          {% elif sold.status == 'Declined' %}
+                          <td data-label="Status" style="color:Red;">{{sold.status}}</td>
+
+                          {% else %}
+                          <td data-label="Status" style="color:rgb(9, 255, 9);">{{sold.status}}</td>
+                          {% endif %}
+                        </tr>
+                      {% else %}
+                      <thead>
+                        <tr>
+                            {% comment %} <th></th> {% endcomment %}
+                            <th>Recent Transactions</th>
+                            <th>Transaction Type</th>
+                            <th>Date</th>
+                            <th>Amount</th>
+                            {% comment %} <th>Payment Method</th> {% endcomment %}
+                            <th>Status</th>
+                        </tr>
+                       </thead>
+                        <tr>
+                          {% comment %} <td data-label="Gift Card Image">
+                            {% comment %} <img src="{{ sold.images.first.image.url }}" style="width:6rem; height:4rem; border-radius: 1rem;"> 
+                            <p> No image yet</p>
+                          </td> {% endcomment %}
+                          <td data-label="Recent Transactions">{{sold.giftCardType}} </td>
+                          <td data-label="Transaction Type">{{sold.trans_type}}</td>
+                          <td data-label="Date">{{sold.date}}</td>
+                          {% comment %} <td data-label="Payment Method">{{sold.payment_method|capfirst}}</td> {% endcomment %}
+                          <td data-label="Amount">GHS{{sold.amount}}</td>
+                          {% if sold.status == 'Processing' %}
+                          <td data-label="Status" style="color:gold;">{{sold.status}}</td>
+
+                          {% elif sold.status == 'Declined' %}
+                          <td data-label="Status" style="color:Red;">{{sold.status}}</td>
+
+                          {% else %}
+                          <td data-label="Status" style="color:rgb(9, 255, 9);">{{sold.status}}</td>
+                          {% endif %}
+                      </tr>
+                      {% endif %}
+                      {% endfor %}
+                      
+  
+                  </tbody>
+                  </table>
+                  {% else %}
+                  <p>{{profile.user|capfirst}}, no transactions activities yet...</p>
+                  {% endif %}
+              </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    
+
+
+    <script src="{% static 'js/dash.js' %}"></script>
+  </body>
+</html>

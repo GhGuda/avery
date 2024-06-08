@@ -1,0 +1,68 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GiftCard Trade - Login</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="shortcut icon" href="{% static "img/bg.jpg" %}" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+</head>
+<body style="background: linear-gradient(to bottom, rgba(0,0,0,0.5), rgba(0,0,0,0.85)), url({% static "img/allcard.png" %}); 
+        color: white;
+        background-repeat: no-repeat;
+        background-size: cover;">
+   <div class="all">
+        <h1>Welcome to GCTrade.</h1>
+        <h4>Login</h4>
+
+        <div class="container">
+            <form action="" method="post">
+                {% csrf_token %}
+                <div class="inputs">
+                    <label for="username">Username</label>
+                    <input type="text" name="username" id="username" placeholder="Enter username">
+                </div>
+                <!-- <div class="inputs">
+                    <label for="email">Email</label>
+                    <input type="email" name="email" id="email" placeholder="Enter email">
+                </div> -->
+
+                <!-- <div class="inputs">
+                    <label for="number">Phone Number</label>
+                    <input type="number" name="number" id="number" placeholder="Phone number">
+                </div> -->
+
+                <div class="inputs">
+                    <label for="password">Enter Password</label>
+                    <input type="password" name="password" id="password" placeholder="Enter password">
+                </div>
+                <!-- <div class="inputs">
+                    <label for="password2">Confirm Password</label>
+                    <input type="password" name="password2" id="password2" placeholder="Confirm Password">
+                </div> -->
+
+                <!-- <div class="inputs">
+                    <label for="invite">Invitation Code (Optional)</label>
+                    <input type="password" name="invite" id="invite" placeholder="Optional">
+                </div> -->
+
+                {% for msg in messages  %}
+                    <p>{{msg}}</p>
+                {% endfor %}
+                <button type="submit">Login</button>
+            </form>
+            <p class="have">Don't have an account? <a href="{% url "register" %}">Register.</a></p>
+            {% comment %} <p class="have">Forgot Password? <a href="register.html">Reset.</a></p> {% endcomment %}
+            <div class="term">
+                <input type="checkbox" checked name="" id="check">
+                <label for="check">Remember Me</label>
+            </div>
+        </div>
+   </div>
+</body>
+</html>

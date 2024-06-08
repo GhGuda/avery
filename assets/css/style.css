@@ -1,0 +1,141 @@
+:root{
+    --text-color: #FFD700;
+    --text-main-color: #000000;
+}
+
+*{
+    padding: 0%;
+    margin: 0%;
+    outline: none;
+    border: none;
+    font-family: "Zilla Slab", serif;
+    text-decoration: none;
+    box-sizing: border-box;
+}
+
+
+body{
+    background: linear-gradient(to bottom, rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/allcard.png);
+    color: white;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+
+::selection {
+    background-color: var(--text-color) !important;
+    color: var(--text-main-color) !important;
+  }
+  
+  
+  body::-webkit-scrollbar{
+    display: none;
+  }
+
+.all{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2rem;
+    height: 96vh;
+}
+
+
+.all h1{
+    color: var(--text-color);
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+
+.container form{
+    position: relative;
+    width: 20rem;
+    max-width: 98%;
+}
+
+form .inputs{
+    display: flex;
+    flex-direction: column;
+    gap: .2rem;
+    margin-bottom: 1rem;
+
+}
+
+form .inputs input, select{
+    padding: .6rem .4rem !important;
+    border-radius: .2rem !important;
+    caret-color: #FFD700;
+    background: white !important;
+}
+
+option{
+    background: var(--text-color);
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+}
+
+p{
+    margin-bottom: .6rem;
+    color: rgba(255, 0, 0, 0.884);
+}
+
+.have{
+    margin-top: .6rem;
+    color: white;
+}
+
+.have a{
+    color: var(--text-color);
+}
+
+button{
+    width: 100%;
+    padding: .6rem;
+    border-radius: .2rem;
+    background: var(--text-color);
+    font-size: 1.2rem;
+    font-weight: 800;
+    transition: .4s;
+}
+
+button:hover{
+    background: var(--text-main-color);
+    color: var(--text-color);
+    cursor: pointer;
+}
+
+.all h4{
+    margin-bottom: 1rem;
+    text-align: center;
+    font-size: 1rem;
+}
+
+
+@media  (max-width: 768px){
+    .all{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-top: 0rem;
+        height: 100vh;
+    }
+
+    .all h1{
+        color: var(--text-color);
+        margin-bottom: 2rem;
+        text-align: center;
+        font-size: 1.7rem;
+    }
+
+    .all h4{
+        margin-bottom: 1rem;
+        text-align: center;
+        font-size: 1rem;
+    }
+}

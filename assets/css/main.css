@@ -53,18 +53,17 @@ display: none;
   z-index: 100;
   justify-content: space-around;
   align-items: center;
-  background: rgba(255, 255, 255, 0.281) !important;
+  background: rgba(255, 255, 255, 0.986) !important;
   font-size: 1.4rem;
-  backdrop-filter: blur(11px) !important;
+  backdrop-filter: blur(100px) !important;
 }
 
 
 
 .dark-mode .container nav{
-  background: rgba(0, 0, 0, 0.26) !important;
-  backdrop-filter: blur(11px) !important;
+  background: rgba(0, 0, 0, 0.945) !important;
+  backdrop-filter: blur(100px) !important;
 }
-
 
 .noti{
   position: relative;

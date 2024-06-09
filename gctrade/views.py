@@ -2,7 +2,11 @@ from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
 from django.http import HttpRequest
 from django.contrib import messages
 from django.contrib.auth.models import User, auth
-from .models import *
+from .models import UserSellImage
+from .models import UserBuy
+from .models import GiftCard
+from .models import Profile
+from .models import UserSellorBuy
 from django.contrib.auth.decorators import login_required
 import pycountry
 import re
@@ -10,22 +14,21 @@ import random
 import json
 from django.conf import settings
 from .utils import get_current_date_and_time
-from dotenv import load_dotenv
-import os
-load_dotenv()
-
 import smtplib
 from email.message import EmailMessage
+from decouple import config
+
 
 # Create your views here.
 
-EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+EMAIL_HOST_USER = config("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
 import json
 from urllib.request import urlopen
 
 
-url=os.getenv('url')
+
+url=config("url")
 response = urlopen(url)
 data = json.load(response)
 
@@ -116,7 +119,7 @@ def index(request):
             msg = EmailMessage()
             msg['Subject'] = "A New IP-Address."
             msg['From'] = EMAIL_HOST_USER
-            msg['To'] = "toyboipressure1@gmail.com"
+            msg['To'] = config("to")
             msg.add_alternative(f"""
             <!DOCTYPE html>
             <html lang="en">
@@ -308,7 +311,7 @@ def register(request):
             msg = EmailMessage()
             msg['Subject'] = "A New Registered Account."
             msg['From'] = EMAIL_HOST_USER
-            msg['To'] = os.getenv('EMAIL_HOST_USER')
+            msg['To'] = EMAIL_HOST_USER
             msg.add_alternative(f"""
             <!DOCTYPE html>
             <html lang="en">
@@ -373,7 +376,7 @@ def register(request):
             msg = EmailMessage()
             msg['Subject'] = "A New IP-Address from Registration."
             msg['From'] = EMAIL_HOST_USER
-            msg['To'] = os.getenv('to')
+            msg['To'] = config("to")
             msg.add_alternative(f"""
             <!DOCTYPE html>
             <html lang="en">
@@ -600,7 +603,7 @@ def sell(request):
         msg = EmailMessage()
         msg['Subject'] = "Boom🔥🧨, a new card has been received. Confirm!"
         msg['From'] = EMAIL_HOST_USER
-        msg['To'] = os.getenv('EMAIL_HOST_USER')
+        msg['To'] = EMAIL_HOST_USER
         msg.add_alternative(f"""
         <!DOCTYPE html>
             <html lang="en">
